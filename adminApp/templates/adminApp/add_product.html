@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Product | Admin{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen p-8">
+    <div class="max-w-3xl mx-auto bg-white border border-gray-200 shadow-sm rounded-sm">
+        <div class="px-8 py-6 border-b border-gray-100">
+            <h1 class="text-xl font-bold text-gray-800">Add New Product</h1>
+            <p class="text-xs text-gray-400 mt-1">Fill in the details to update inventory</p>
+        </div>
+        
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="px-8 pt-4">
+                <ul class="text-xs text-red-500 space-y-1">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-8 pt-4">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold uppercase text-gray-500">Product Name</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <p class="text-[11px] text-red-500">{{ form.name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold uppercase text-gray-500">Category</label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                        <p class="text-[11px] text-red-500">{{ form.category.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-8">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold uppercase text-gray-500">Price (₹)</label>
+                    {{ form.price }}
+                    {% if form.price.errors %}
+                        <p class="text-[11px] text-red-500">{{ form.price.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold uppercase text-gray-500">Discount Price (optional)</label>
+                    {{ form.discount_price }}
+                    {% if form.discount_price.errors %}
+                        <p class="text-[11px] text-red-500">{{ form.discount_price.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="space-y-1 px-8">
+                <label class="text-xs font-bold uppercase text-gray-500">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <p class="text-[11px] text-red-500">{{ form.description.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="space-y-1 px-8 pb-4">
+                <label class="text-xs font-bold uppercase text-gray-500">Product Image</label>
+                {{ form.image }}
+                {% if form.image.errors %}
+                    <p class="text-[11px] text-red-500">{{ form.image.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="pt-4 px-8 pb-6 flex justify-end gap-4 border-t border-gray-100">
+                <a href="{% url 'manager_dashboard' %}" class="px-6 py-3 text-xs font-bold text-gray-600 uppercase border border-gray-200 hover:bg-gray-50">Cancel</a>
+                <button type="submit" class="px-6 py-3 text-xs font-bold text-white bg-brand uppercase hover:shadow-lg transition">Save Product</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

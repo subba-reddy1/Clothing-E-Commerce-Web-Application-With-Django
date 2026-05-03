@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="relative w-full h-[600px] overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80&w=2000" 
+         class="w-full h-full object-cover" alt="StyleHaven Hero">
+    
+    <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+        <div class="text-center text-white px-4">
+            <p class="uppercase tracking-[0.3em] text-xs font-bold mb-4 drop-shadow-md">Spring / Summer 2026</p>
+            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-8 italic drop-shadow-lg">The Art of Living.</h1>
+            
+            <a href="{% url 'products' %}" 
+               class="bg-[#4a5d23] text-white px-10 py-4 uppercase text-xs font-bold tracking-widest hover:bg-white hover:text-[#4a5d23] transition duration-300 shadow-xl border border-[#4a5d23]">
+                Explore Collection
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-6 py-20">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-serif font-bold text-[#2c2c2c]">Curated For You</h2>
+        <div class="w-16 h-1 bg-[#4a5d23] mx-auto mt-4"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <a href="{% url 'products' %}?section=men" class="group block relative h-[450px] overflow-hidden rounded-xl">
+            <img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition"></div>
+            <div class="absolute bottom-6 left-6 text-white">
+                <h3 class="text-2xl font-serif italic">Men</h3>
+                <span class="text-[10px] uppercase tracking-widest border-b border-white pb-1">Shop Now</span>
+            </div>
+        </a>
+
+        <a href="{% url 'products' %}?section=women" class="group block relative h-[450px] overflow-hidden rounded-xl">
+            <img src="https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition"></div>
+            <div class="absolute bottom-6 left-6 text-white">
+                <h3 class="text-2xl font-serif italic">Women</h3>
+                <span class="text-[10px] uppercase tracking-widest border-b border-white pb-1">Shop Now</span>
+            </div>
+        </a>
+
+        <a href="{% url 'products' %}?section=kids" class="group block relative h-[450px] overflow-hidden rounded-xl">
+            <img src="https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition"></div>
+            <div class="absolute bottom-6 left-6 text-white">
+                <h3 class="text-2xl font-serif italic">Kids</h3>
+                <span class="text-[10px] uppercase tracking-widest border-b border-white pb-1">Shop Now</span>
+            </div>
+        </a>
+
+        <a href="{% url 'products' %}?section=accessories" class="group block relative h-[450px] overflow-hidden rounded-xl">
+            <img src="https://images.unsplash.com/photo-1511556820780-d912e42b4980?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition"></div>
+            <div class="absolute bottom-6 left-6 text-white">
+                <h3 class="text-2xl font-serif italic">Accessories</h3>
+                <span class="text-[10px] uppercase tracking-widest border-b border-white pb-1">Shop Now</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="bg-white py-24">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center gap-16">
+            
+            <div class="w-full md:w-1/2">
+                <div class="relative">
+                    <div class="absolute -top-4 -left-4 w-full h-full border-2 border-[#4a5d23] rounded-xl"></div>
+                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=800&auto=format&fit=crop" 
+                         class="relative z-10 w-full h-[500px] object-cover rounded-xl shadow-2xl grayscale hover:grayscale-0 transition duration-700">
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/2 space-y-6">
+                <span class="text-[#4a5d23] text-xs font-bold uppercase tracking-[0.2em]">Our Story</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-[#2c2c2c] leading-tight">
+                    Fashion that feels like <span class="italic text-[#4a5d23]">Home.</span>
+                </h2>
+                <p class="text-stone-500 leading-relaxed">
+                    At StyleHaven, we believe that style is a way to say who you are without having to speak. 
+                    Founded in 2026, our mission has been simple: to curate sustainable, high-quality fashion that transcends trends.
+                </p>
+                <p class="text-stone-500 leading-relaxed">
+                    Every piece in our collection is chosen with care, ensuring that it not only looks good but feels good to wear.
+                    Welcome to your new favorite place.
+                </p>
+                
+                <div class="pt-4">
+                    <a href="{% url 'about' %}" class="inline-block border-b-2 border-[#4a5d23] pb-1 text-[#4a5d23] font-bold uppercase text-xs tracking-widest hover:text-black hover:border-black transition">
+                        Read More
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

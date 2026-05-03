@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Login | StyleHaven{% endblock %}
+
+{% block content %}
+<div class="min-h-[80vh] flex items-center justify-center bg-[#f9f8f4]">
+    <div class="bg-white w-full max-w-md p-8 rounded-2xl shadow-xl border border-stone-100">
+        
+        <div class="flex bg-stone-100 p-1 rounded-lg mb-8">
+            <button onclick="switchTab('user')" id="btn-user" class="flex-1 py-2 text-sm font-bold rounded-md bg-white shadow-sm text-brand transition">Customer</button>
+            <button onclick="switchTab('admin')" id="btn-admin" class="flex-1 py-2 text-sm font-bold rounded-md text-stone-500 transition">Admin / Manager</button>
+        </div>
+
+        <h2 class="text-3xl font-serif font-bold text-center text-stone-800 mb-2">Welcome Back</h2>
+        <p class="text-center text-stone-500 text-sm mb-8">Access your personalized haven.</p>
+
+        {% if error %}
+        <div class="bg-red-50 text-red-500 text-xs font-bold p-3 rounded-lg mb-4 text-center">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="POST" id="form-user" class="flex flex-col gap-4">
+            {% csrf_token %}
+            <input type="hidden" name="login_type" value="user">
+            
+            <div>
+                <label class="text-xs font-bold uppercase text-stone-400 tracking-widest mb-1 block">Email Address</label>
+                <input type="email" name="email" required placeholder="name@example.com"
+                       class="w-full bg-[#f9f8f4] border border-stone-200 px-4 py-3 rounded-lg text-sm outline-none focus:border-[#4a5d23] transition">
+            </div>
+            
+            <button type="submit" class="w-full bg-[#4a5d23] text-white font-bold py-4 rounded-lg shadow-lg hover:bg-[#364419] transition uppercase tracking-widest text-xs">
+                Send OTP
+            </button>
+        </form>
+
+        <form method="POST" id="form-admin" class="hidden flex-col gap-4">
+            {% csrf_token %}
+            <input type="hidden" name="login_type" value="admin">
+            
+            <div>
+                <label class="text-xs font-bold uppercase text-stone-400 tracking-widest mb-1 block">Username</label>
+                <input type="text" name="username" placeholder="admin"
+                       class="w-full bg-[#f9f8f4] border border-stone-200 px-4 py-3 rounded-lg text-sm outline-none focus:border-[#4a5d23] transition">
+            </div>
+            <div>
+                <label class="text-xs font-bold uppercase text-stone-400 tracking-widest mb-1 block">Password</label>
+                <input type="password" name="password" placeholder="••••••"
+                       class="w-full bg-[#f9f8f4] border border-stone-200 px-4 py-3 rounded-lg text-sm outline-none focus:border-[#4a5d23] transition">
+            </div>
+
+            <button type="submit" class="w-full bg-stone-800 text-white font-bold py-4 rounded-lg shadow-lg hover:bg-black transition uppercase tracking-widest text-xs">
+                Manager Login
+            </button>
+        </form>
+
+        <div class="mt-8 text-center">
+            <p class="text-stone-400 text-xs">No account yet? 
+                <a href="{% url 'register' %}" class="text-[#4a5d23] font-bold hover:underline">Register Here</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchTab(type) {
+        if(type === 'user') {
+            document.getElementById('form-user').classList.remove('hidden');
+            document.getElementById('form-user').classList.add('flex');
+            document.getElementById('form-admin').classList.add('hidden');
+            document.getElementById('form-admin').classList.remove('flex');
+            
+            document.getElementById('btn-user').classList.add('bg-white', 'shadow-sm', 'text-brand');
+            document.getElementById('btn-user').classList.remove('text-stone-500');
+            document.getElementById('btn-admin').classList.remove('bg-white', 'shadow-sm', 'text-brand');
+            document.getElementById('btn-admin').classList.add('text-stone-500');
+        } else {
+            document.getElementById('form-user').classList.add('hidden');
+            document.getElementById('form-user').classList.remove('flex');
+            document.getElementById('form-admin').classList.remove('hidden');
+            document.getElementById('form-admin').classList.add('flex');
+
+            document.getElementById('btn-admin').classList.add('bg-white', 'shadow-sm', 'text-brand');
+            document.getElementById('btn-admin').classList.remove('text-stone-500');
+            document.getElementById('btn-user').classList.remove('bg-white', 'shadow-sm', 'text-brand');
+            document.getElementById('btn-user').classList.add('text-stone-500');
+        }
+    }
+</script>
+{% endblock %}

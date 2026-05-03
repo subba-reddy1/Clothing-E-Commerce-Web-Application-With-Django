@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-6xl mx-auto px-6 py-12">
+    <div class="flex gap-4 items-center mb-8">
+        <div class="w-16 h-16 bg-brand rounded-full flex items-center justify-center text-white text-2xl font-serif">
+            {{ user.username|slice:":1"|upper }}
+        </div>
+        <div>
+            <h1 class="text-2xl font-bold text-stone-800">Hello, {{ user.username }}</h1>
+            <p class="text-stone-500 text-sm">Member since {{ user.date_joined|date:"F Y" }}</p>
+        </div>
+    </div>
+
+    <h2 class="text-xl font-serif font-bold text-brand mb-6 border-b border-stone-200 pb-2">Order History</h2>
+
+    <div class="space-y-4">
+        {% for order in orders %}
+        <div class="bg-white p-6 rounded-2xl border border-stone-100 shadow-sm hover:shadow-md transition">
+            <div class="flex flex-wrap justify-between items-center mb-4">
+                <div>
+                    <span class="text-xs font-bold uppercase text-stone-400 tracking-widest">Order ID</span>
+                    <p class="font-bold text-lg text-stone-800">#{{ order.id }}</p>
+                </div>
+                <div>
+                    <span class="text-xs font-bold uppercase text-stone-400 tracking-widest">Date</span>
+                    <p class="text-stone-600">{{ order.ordered_at|date:"M d, Y" }}</p>
+                </div>
+                <div>
+                    <span class="text-xs font-bold uppercase text-stone-400 tracking-widest">Total</span>
+                    <p class="font-bold text-brand">₹{{ order.total_amount }}</p>
+                </div>
+                <div>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase
+                        {% if order.status == 'Delivered' %} bg-green-100 text-green-700
+                        {% elif order.status == 'Shipped' %} bg-blue-100 text-blue-700
+                        {% else %} bg-yellow-100 text-yellow-700 {% endif %}">
+                        {{ order.status }}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="space-y-2">
+                {% for item in order.items.all %}
+                <div class="flex items-center gap-4 text-sm text-stone-600">
+                    <img src="{{ item.product.image.url }}" class="w-10 h-10 rounded object-cover">
+                    <span>{{ item.quantity }}x {{ item.product.name }} ({{ item.size }}, {{ item.color }})</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-stone-500">You haven't placed any orders yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

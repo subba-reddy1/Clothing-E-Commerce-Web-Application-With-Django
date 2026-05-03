@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% block title %}Order #{{ order.id }} | Admin{% endblock %}
+
+{% block content %}
+<div class="bg-stone-50 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto">
+        <!-- Breadcrumb + back -->
+        <div class="mb-6 flex flex-wrap items-center gap-2 text-sm">
+            <a href="{% url 'manager_dashboard' %}" class="text-stone-500 hover:text-stone-700">Dashboard</a>
+            <span class="text-stone-400">/</span>
+            <a href="{% url 'view_orders' %}" class="text-stone-500 hover:text-stone-700">Orders</a>
+            <span class="text-stone-400">/</span>
+            <span class="font-semibold text-stone-800">Order #{{ order.id }}</span>
+        </div>
+
+        <!-- Header: Order ID + status -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+            <h1 class="text-2xl font-bold text-stone-900">Order #{{ order.id }}</h1>
+            <div class="flex items-center gap-3">
+                <span class="text-sm text-stone-500">Status</span>
+                {% with status=order.status %}
+                <span class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wide
+                    {% if status == 'Pending' %}bg-amber-100 text-amber-800
+                    {% elif status == 'Confirmed' %}bg-blue-100 text-blue-800
+                    {% elif status == 'Shipped' %}bg-indigo-100 text-indigo-800
+                    {% elif status == 'Delivered' %}bg-emerald-100 text-emerald-800
+                    {% elif status == 'Cancelled' %}bg-red-100 text-red-800
+                    {% else %}bg-stone-100 text-stone-700{% endif %}">
+                    {{ order.status }}
+                </span>
+                {% endwith %}
+            </div>
+        </div>
+
+        {% if messages %}
+        <div class="mb-6 space-y-2">
+            {% for message in messages %}
+            <div class="p-4 rounded-lg text-sm font-medium {% if message.tags == 'error' %}bg-red-50 text-red-800{% else %}bg-emerald-50 text-emerald-800{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Customer & shipping -->
+            <div class="lg:col-span-2 bg-white border border-stone-200 rounded-xl shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
+                    <h2 class="text-sm font-bold uppercase tracking-wide text-stone-500">Customer & shipping</h2>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-stone-400">Name</p>
+                        <p class="text-stone-900 font-medium">{{ order.full_name }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold uppercase text-stone-400">Email</p>
+                        <p class="text-stone-900">{{ order.user.email|default:"—" }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold uppercase text-stone-400">Phone</p>
+                        <p class="text-stone-900">{{ order.phone }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold uppercase text-stone-400">Address</p>
+                        <p class="text-stone-900">{{ order.address }}, {{ order.city }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment & totals -->
+            <div class="bg-white border border-stone-200 rounded-xl shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
+                    <h2 class="text-sm font-bold uppercase tracking-wide text-stone-500">Payment & totals</h2>
+                </div>
+                <div class="p-6 space-y-3">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-stone-500">Payment status</span>
+                        <span class="font-medium {% if order.payment_status == 'Paid' %}text-emerald-600{% elif order.payment_status == 'Failed' or order.payment_status == 'Refunded' %}text-red-600{% else %}text-amber-600{% endif %}">{{ order.payment_status }}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-stone-500">Subtotal</span>
+                        <span class="font-medium text-stone-900">₹{% if order.subtotal %}{{ order.subtotal }}{% else %}{{ order.total_amount }}{% endif %}</span>
+                    </div>
+                    {% if order.discount and order.discount > 0 %}
+                    <div class="flex justify-between text-sm">
+                        <span class="text-stone-500">Discount</span>
+                        <span class="font-medium text-red-600">−₹{{ order.discount }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="flex justify-between text-base font-bold pt-3 border-t border-stone-100">
+                        <span class="text-stone-700">Total</span>
+                        <span class="text-stone-900">₹{{ order.total_amount }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order items -->
+        <div class="bg-white border border-stone-200 rounded-xl shadow-sm overflow-hidden mb-8">
+            <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
+                <h2 class="text-sm font-bold uppercase tracking-wide text-stone-500">Ordered items</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-stone-50 border-b border-stone-100">
+                        <tr>
+                            <th class="px-6 py-3 text-xs font-bold uppercase text-stone-500">Product</th>
+                            <th class="px-6 py-3 text-xs font-bold uppercase text-stone-500 text-right">Qty</th>
+                            <th class="px-6 py-3 text-xs font-bold uppercase text-stone-500 text-right">Unit price</th>
+                            <th class="px-6 py-3 text-xs font-bold uppercase text-stone-500 text-right">Line total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-stone-100">
+                        {% for item in order.items.all %}
+                        <tr>
+                            <td class="px-6 py-4">
+                                <p class="font-medium text-stone-900">{{ item.product.name }}</p>
+                                {% if item.size or item.color %}<p class="text-xs text-stone-500">{{ item.size }}{% if item.size and item.color %} / {% endif %}{{ item.color }}</p>{% endif %}
+                            </td>
+                            <td class="px-6 py-4 text-right text-stone-700">{{ item.quantity }}</td>
+                            <td class="px-6 py-4 text-right text-stone-700">₹{{ item.price }}</td>
+                            <td class="px-6 py-4 text-right font-medium text-stone-900">₹{{ item.line_total }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="px-6 py-8 text-center text-stone-500">No items.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Status management -->
+        <div class="bg-white border border-stone-200 rounded-xl shadow-sm overflow-hidden mb-8">
+            <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
+                <h2 class="text-sm font-bold uppercase tracking-wide text-stone-500">Update status</h2>
+            </div>
+            <div class="p-6">
+                {% if allowed_next_statuses %}
+                <form action="{% url 'admin_order_update_status' order.id %}" method="post" class="flex flex-wrap items-end gap-4">
+                    {% csrf_token %}
+                    <div class="flex-1 min-w-[200px]">
+                        <label for="new_status" class="block text-xs font-bold uppercase text-stone-500 mb-2">New status</label>
+                        <select name="new_status" id="new_status" required class="w-full border border-stone-200 rounded-lg px-4 py-2.5 text-stone-800 focus:border-[#4a5d23] focus:ring-1 focus:ring-[#4a5d23] outline-none">
+                            <option value="">— Select —</option>
+                            {% for s in allowed_next_statuses %}
+                            <option value="{{ s }}">{{ s }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="px-5 py-2.5 bg-[#4a5d23] text-white font-bold text-sm rounded-lg hover:bg-[#3d4e1d] transition">Update status</button>
+                </form>
+                <p class="mt-3 text-xs text-stone-500">Allowed: {{ order.status }} → {% for s in allowed_next_statuses %}{{ s }}{% if not forloop.last %}, {% endif %}{% endfor %}. Invalid transitions are blocked.</p>
+                {% else %}
+                <p class="text-stone-500 text-sm">This order is in <strong>{{ order.status }}</strong>. No further status changes are allowed.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Status history -->
+        {% if status_history %}
+        <div class="bg-white border border-stone-200 rounded-xl shadow-sm overflow-hidden">
+            <div class="px-6 py-4 border-b border-stone-100 bg-stone-50">
+                <h2 class="text-sm font-bold uppercase tracking-wide text-stone-500">Status history</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-stone-50 border-b border-stone-100">
+                        <tr>
+                            <th class="px-6 py-3 text-xs font-bold uppercase text-stone-500">From</th>
+                            <th class="px-6 py-3 text-xs font-bold uppercase text-stone-500">To</th>
+                            <th class="px-6 py-3 text-xs font-bold uppercase text-stone-500">Date & time</th>
+                            <th class="px-6 py-3 text-xs font-bold uppercase text-stone-500">By</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-stone-100">
+                        {% for h in status_history %}
+                        <tr>
+                            <td class="px-6 py-3 text-stone-600">{{ h.from_status }}</td>
+                            <td class="px-6 py-3 font-medium text-stone-900">{{ h.to_status }}</td>
+                            <td class="px-6 py-3 text-stone-600">{{ h.changed_at|date:"d M Y H:i" }}</td>
+                            <td class="px-6 py-3 text-stone-600">{{ h.changed_by.username|default:"—" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

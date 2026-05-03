@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard | StyleHub{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen">
+    <div class="flex flex-col md:flex-row max-w-7xl mx-auto items-start">
+        
+        <aside class="w-full md:w-64 bg-white border-r border-gray-200 min-h-screen">
+            <div class="p-6">
+                <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Store Manager</h2>
+                <nav class="space-y-1">
+                    <a href="{% url 'manager_dashboard' %}" class="flex items-center gap-3 px-4 py-3 bg-pink-50 text-brand text-sm font-bold rounded-sm border-l-4 border-brand">
+                        <i class="fas fa-chart-pie"></i> Dashboard
+                    </a>
+                    <a href="{% url 'add_product' %}" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-black text-sm font-bold rounded-sm transition">
+                        <i class="fas fa-plus"></i> Add Product
+                    </a>
+                    <a href="{% url 'view_orders' %}" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-black text-sm font-bold rounded-sm transition">
+                        <i class="fas fa-shopping-bag"></i> Orders
+                    </a>
+                    <a href="{% url 'view_users' %}" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-black text-sm font-bold rounded-sm transition">
+                        <i class="fas fa-users"></i> Users
+                    </a>
+                    <a href="{% url 'sales_report' %}" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-black text-sm font-bold rounded-sm transition">
+                        <i class="fas fa-file-invoice-dollar"></i> Sales Report
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="flex-1 p-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-8">Overview</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 shadow-sm border border-gray-100 rounded-sm">
+                    <p class="text-gray-500 text-xs font-bold uppercase mb-2">Total Revenue</p>
+                    <h3 class="text-3xl font-bold text-gray-800">₹8.4L</h3>
+                    <span class="text-green-500 text-xs font-bold"><i class="fas fa-arrow-up"></i> 12% vs last month</span>
+                </div>
+                <div class="bg-white p-6 shadow-sm border border-gray-100 rounded-sm">
+                    <p class="text-gray-500 text-xs font-bold uppercase mb-2">Active Orders</p>
+                    <h3 class="text-3xl font-bold text-gray-800">124</h3>
+                    <span class="text-orange-500 text-xs font-bold">45 Pending</span>
+                </div>
+                <div class="bg-white p-6 shadow-sm border border-gray-100 rounded-sm">
+                    <p class="text-gray-500 text-xs font-bold uppercase mb-2">Total Users</p>
+                    <h3 class="text-3xl font-bold text-gray-800">1,204</h3>
+                    <span class="text-gray-400 text-xs font-bold">+28 this week</span>
+                </div>
+                <div class="bg-white p-6 shadow-sm border border-gray-100 rounded-sm">
+                    <p class="text-gray-500 text-xs font-bold uppercase mb-2">Products</p>
+                    <h3 class="text-3xl font-bold text-gray-800">540</h3>
+                    <span class="text-brand text-xs font-bold">Low Stock: 12</span>
+                </div>
+            </div>
+
+            <div class="bg-white border border-gray-200 shadow-sm rounded-sm">
+                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                    <h3 class="font-bold text-gray-700">Recent Orders</h3>
+                    <a href="{% url 'view_orders' %}" class="text-xs font-bold text-brand uppercase hover:underline">View All</a>
+                </div>
+                <div class="p-6 text-center text-gray-500 text-sm">
+                    Loading latest data...
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

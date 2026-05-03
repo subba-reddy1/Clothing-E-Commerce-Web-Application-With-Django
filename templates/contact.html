@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-5xl mx-auto px-6 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div>
+            <h1 class="text-3xl font-bold mb-4">Get in Touch</h1>
+            <p class="text-gray-500 mb-8">Have a query? We are here to help.</p>
+            
+            <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-brand">
+                        <i class="fas fa-location-dot"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">Head Office</h4>
+                        <p class="text-sm text-gray-500">123 Fashion Street, Tech Park, Bangalore</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-brand">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">Email Us</h4>
+                        <p class="text-sm text-gray-500">support@stylehub.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-8 shadow-lg rounded-lg border border-gray-100">
+            <form>
+                <div class="mb-4">
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Name</label>
+                    <input type="text" class="w-full border p-3 rounded text-sm focus:outline-none focus:border-black">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Email</label>
+                    <input type="email" class="w-full border p-3 rounded text-sm focus:outline-none focus:border-black">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Message</label>
+                    <textarea rows="4" class="w-full border p-3 rounded text-sm focus:outline-none focus:border-black"></textarea>
+                </div>
+                <button class="w-full btn-primary py-3">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

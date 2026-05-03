@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div class="space-y-4">
+            <div class="aspect-[3/4] overflow-hidden rounded-2xl bg-gray-100">
+                <img src="{{ product.image.url }}" class="w-full h-full object-cover" alt="{{ product.name }}">
+            </div>
+        </div>
+
+        <div class="py-4">
+            <h1 class="text-4xl font-serif font-bold text-brand mb-2">{{ product.name }}</h1>
+            <p class="text-2xl font-bold text-stone-800 mb-6">₹{{ product.price }}</p>
+            
+            <p class="text-stone-600 mb-8 leading-relaxed">{{ product.description }}</p>
+
+            <form action="{% url 'add_to_cart' product.id %}" method="POST" class="space-y-6">
+                {% csrf_token %}
+                
+                <div>
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-stone-500 mb-3">Select Size</h3>
+                    <div class="flex gap-3">
+                        {% for size in product.sizes.all %}
+                        <label class="cursor-pointer">
+                            <input type="radio" name="size" value="{{ size.id }}" class="peer sr-only" required>
+                            <div class="w-12 h-12 flex items-center justify-center border border-stone-300 rounded-lg peer-checked:bg-brand peer-checked:text-white peer-checked:border-brand transition hover:border-brand">
+                                {{ size.name }}
+                            </div>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-stone-500 mb-3">Select Color</h3>
+                    <div class="flex gap-3">
+                        {% for color in product.colors.all %}
+                        <label class="cursor-pointer">
+                            <input type="radio" name="color" value="{{ color.id }}" class="peer sr-only" required>
+                            <div class="w-10 h-10 rounded-full border-2 border-transparent peer-checked:border-brand peer-checked:scale-110 transition" style="background-color: {{ color.code }};"></div>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="pt-6">
+                    <button type="submit" class="w-full bg-brand text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition uppercase tracking-widest text-sm">
+                        Add to Cart
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

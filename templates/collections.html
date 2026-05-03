@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-6 py-10">
+    <h1 class="text-3xl font-bold text-center mb-2 uppercase">Curated Collections</h1>
+    <p class="text-center text-gray-500 mb-12">Handpicked styles for every mood.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="relative h-96 group overflow-hidden rounded-lg">
+            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition"></div>
+            <div class="absolute bottom-8 left-8 text-white">
+                <span class="bg-white text-black px-2 py-1 text-xs font-bold uppercase mb-2 inline-block">Trending</span>
+                <h2 class="text-3xl font-bold">Summer Vibes</h2>
+                <a href="{% url 'products' %}" class="text-sm underline mt-2 inline-block">View Collection</a>
+            </div>
+        </div>
+        <div class="relative h-96 group overflow-hidden rounded-lg">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition"></div>
+            <div class="absolute bottom-8 left-8 text-white">
+                <span class="bg-white text-black px-2 py-1 text-xs font-bold uppercase mb-2 inline-block">New Arrival</span>
+                <h2 class="text-3xl font-bold">Winter Essentials</h2>
+                <a href="{% url 'products' %}" class="text-sm underline mt-2 inline-block">View Collection</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
