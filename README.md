@@ -28,7 +28,7 @@ Follow these steps to run the project locally:
 
 Clone the repository:
 
-git clone [https://github.com/RevanthKunala/Clothing-E-Commerce-Web-Application-With-Django.git](https://github.com/RevanthKunala/Clothing-E-Commerce-Web-Application-With-Django.git)
+[git clone [https://github.com/RevanthKunala/Clothing-E-Commerce-Web-Application-With-Django.git](https://github.com/RevanthKunala/Clothing-E-Commerce-Web-Application-With-Django.git)](https://github.com/subba-reddy1/Clothing-E-Commerce-Web-Application-With-Django)
 cd Clothing-E-Commerce-Web-Application-With-Django
 Create a Virtual Environment (Optional but Recommended):
 
